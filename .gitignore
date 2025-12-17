@@ -1,0 +1,34 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cypress artifacts
+/cypress/screenshots/
+/cypress/videos/
+/cypress/reports/
+/cypress/reports/.jsons/
+
+# Build output
+dist/
+
+# Environment files
+.env
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-workspace
+
+# MacOS
+.DS_Store
+
+# Misc
+coverage/

@@ -1,0 +1,25 @@
+{
+  "name": "kong-gateway-test",
+  "version": "1.0.0",
+  "description": "Cypress with TypeScript to Kong Gateway web UI",
+  "scripts": {
+    "test": "npm run cypress:run",
+    "typecheck": "tsc --noEmit",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "keywords": [
+    "cypress",
+    "typescript",
+    "kong-gateway"
+  ],
+  "author": "taoxianfeng",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.19.27",
+    "cypress": "^15.7.1",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
