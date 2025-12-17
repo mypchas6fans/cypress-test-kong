@@ -39,7 +39,7 @@ jobs:
 
       - name: Build Docker images and start services
         run: |
-          docker-compose up -d
+          docker compose up -d
 
       - name: Wait for app to be ready
         run: |
@@ -73,4 +73,4 @@ jobs:
 
       - name: Tear down Docker
         if: always()
-        run: docker-compose down --volumes --remove-orphans
+        run: docker compose down --volumes --remove-orphans
