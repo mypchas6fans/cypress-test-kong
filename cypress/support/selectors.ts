@@ -15,13 +15,19 @@ export const selectors = {
   advancedFieldsCollapse: '[data-testid="advanced-fields-collapse"]',
   advancedCollapseTrigger: '[data-testid="collapse-trigger-content"]',
   gatewayServiceRetriesInput: '[data-testid="gateway-service-retries-input"]',
+  gatewayServiceReadTimeoutInput: '[data-testid="gateway-service-readTimeout-input"]',
   gatewayServiceNameInput: '[data-testid="gateway-service-name-input"]',
   tagsCollapse: '[data-testid="tags-collapse"]',
   gatewayServiceTagsInput: '[data-testid="gateway-service-tags-input"]',
   serviceCreateFormSubmit: '[data-testid="service-create-form-submit"]',
 
+  gatewayServiceProtocolRadio: '[data-testid="gateway-service-protocol-radio',
+  gatewayServiceHostInput: '[data-testid="gateway-service-host-input"]',
+  gatewayServicePathInput: '[data-testid="gateway-service-path-input"]',
+
   // Service detail page
   namePropertyValue: '[data-testid="name-property-value"]',
+  namePlainText: '[data-testid="name-plain-text"]',
   servicesMetric: '[data-testid="Services"]',
 
   // Add route form fields and buttons

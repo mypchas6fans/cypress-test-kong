@@ -1,34 +1,26 @@
 /// <reference types="cypress" />
-import selectors from '../support/selectors'
+import selectors from '../../support/selectors'
+import { SERVICE_URL } from '@/support/testData'
 
-const serviceUrl = 'http://mockbin.org/request';
+const serviceUrl = SERVICE_URL;
 const timestamp = Date.now();
 const serviceName = `new-service-for-route-${timestamp}`;
 const routeName = `route-${timestamp}`;
 const routeUrl = `/test-route-${timestamp}`;
 
-describe('Kong gateway UI test/service', () => {
+describe('Kong gateway UI test/route/normal', () => {
 
     // Ensure a service exists for routes tests
     before(() => {
         const url = Cypress.env('apiBaseUrl') + '/default/services';
-        const payload = {
-            name: serviceName,
-            tags: null,
-            read_timeout: 60000,
-            retries: 5,
-            connect_timeout: 60000,
-            ca_certificates: null,
-            client_certificate: null,
-            write_timeout: 60000,
-            port: 80,
-            url: serviceUrl,
-            enabled: true
-        };
+        // Load base payload from fixtures and set dynamic fields (name & url)
+        cy.fixture('createService.json').then((base) => {
+            const payload = { ...base, name: serviceName, url: serviceUrl };
 
-        // Try create (if already exists, try to locate it)
-        cy.apiCreateService(payload).then((id) => {
-            cy.wrap(id).as('serviceId');
+            // Try create (if already exists, try to locate it)
+            cy.apiCreateService(payload).then((id) => {
+                cy.wrap(id).as('serviceId');
+            });
         });
     });
 

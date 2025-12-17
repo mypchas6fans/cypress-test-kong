@@ -1,0 +1,6 @@
+{
+  "serviceUrl": "http://mockbin.org/request",
+  "serviceTag": "tag1",
+  "serviceDefaultReadTimeout": 60000,
+  "serviceCustomReadTimeout": 30000
+}
