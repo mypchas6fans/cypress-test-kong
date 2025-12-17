@@ -13,7 +13,7 @@ export default defineConfig({
         specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}', // test file matching pattern
         supportFile: 'cypress/support/e2e.ts', // global support file
         // Test run options
-        video: true,
+        video: false,
         screenshotOnRunFailure: true,
         defaultCommandTimeout: 10000,
         pageLoadTimeout: 60000,
