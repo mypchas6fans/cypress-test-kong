@@ -6,16 +6,20 @@ import './command';
 
 // Global setup used by most specs. If a spec needs custom setup, it can define its own local hooks.
 beforeEach(() => {
+  if (Cypress.env('disableGlobalBeforeEach')) {
+    cy.log('Current file disables global beforeEach hook');
+    return;
+  }
   // Visit base URL and verify main workspace screen
-  cy.visit('/')
-  cy.url().should('eq', Cypress.config('baseUrl') + '/workspaces')
-  cy.title().should('eq', 'Workspaces | Kong Manager')
+  cy.visit('/');
+  cy.url().should('eq', Cypress.config('baseUrl') + '/workspaces');
+  cy.title().should('eq', 'Workspaces | Kong Manager');
 
   // Shared intercepts
-  cy.intercept('POST', Cypress.env('apiBaseUrl') + '/default/services').as('createService')
-  cy.intercept('GET', Cypress.env('apiBaseUrl') + '/default/services/*').as('loadServiceDetail')
-  cy.intercept('POST', Cypress.env('apiBaseUrl') + '/default/routes').as('createRoute')
-  cy.intercept('GET', Cypress.env('apiBaseUrl') + '/default/routes/*').as('loadRouteDetail')
+  cy.intercept('POST', Cypress.env('apiBaseUrl') + '/default/services').as('createService');
+  cy.intercept('GET', Cypress.env('apiBaseUrl') + '/default/services/*').as('loadServiceDetail');
+  cy.intercept('POST', Cypress.env('apiBaseUrl') + '/default/routes').as('createRoute');
+  cy.intercept('GET', Cypress.env('apiBaseUrl') + '/default/routes/*').as('loadRouteDetail');
 })
 
 // Optional global cleanup/logging

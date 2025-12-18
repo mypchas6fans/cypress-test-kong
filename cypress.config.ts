@@ -10,7 +10,7 @@ export default defineConfig({
     // E2E test core configuration
     e2e: {
         baseUrl: 'http://localhost:8002', // web service url
-        specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}', // test file matching pattern
+        specPattern: 'cypress/**/*.cy.{js,jsx,ts,tsx}', // test file matching pattern
         supportFile: 'cypress/support/e2e.ts', // global support file
         // Test run options
         video: false,
