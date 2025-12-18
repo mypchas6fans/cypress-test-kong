@@ -34,6 +34,7 @@ describe('Kong gateway UI test/service/normal', () => {
     cy.get(selectors.gatewayServiceUrlInput).type(serviceUrl);
 
     // Expand and verify auto filled advanced fields
+    // TODO: not all default fields are verified here
     cy.get(selectors.advancedFieldsCollapse)
       .find(selectors.advancedCollapseTrigger)
       .click();
@@ -58,6 +59,7 @@ describe('Kong gateway UI test/service/normal', () => {
       const svcName = String(serviceName);
       cy.wait('@createService').then((interception) => {
         // Verify request body
+        // TODO: not all fields are verified here
         const requestBody = interception.request.body;
         expect(requestBody.name).to.eq(svcName);
         expect(requestBody.url).to.eq(serviceUrl);
@@ -65,6 +67,7 @@ describe('Kong gateway UI test/service/normal', () => {
         expect(requestBody.enabled).to.be.true;
 
         // Verify response body
+        // TODO: not all fields are verified here
         expect(interception.response).to.not.be.undefined;
         const response = interception.response!;
         expect(response.statusCode).to.eq(201); // 201 Created

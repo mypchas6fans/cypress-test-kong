@@ -1,6 +1,22 @@
 {
-  "serviceUrl": "http://mockbin.org/request",
+  "serviceProtocols": "http,https,grpc,grpcs,ws,wss,tls,tcp,udp",
+  "serviceDomainPath": "domain",
   "serviceTag": "tag1",
+  "serviceTagArray": "tag1,tag2",
+  "serviceDefaultConnectTimeout": 60000,
+  "serviceCustomConnectTimeout": 30000,
+  "serviceMinConnectTimeout": 1,
+  "serviceMaxConnectTimeout": 2147483646,
+  "serviceDefaultWriteTimeout": 60000,
+  "serviceCustomWriteTimeout": 30000,
+  "serviceMinWriteTimeout": 1,
+  "serviceMaxWriteTimeout": 2147483646,
   "serviceDefaultReadTimeout": 60000,
-  "serviceCustomReadTimeout": 30000
+  "serviceCustomReadTimeout": 30000,
+  "serviceMinReadTimeout": 1,
+  "serviceMaxReadTimeout": 2147483646,
+  "serviceDefaultRetries": 5,
+  "serviceCustomRetries": 2,
+  "serviceMinRetries": 0,
+  "serviceMaxRetries": 32767
 }

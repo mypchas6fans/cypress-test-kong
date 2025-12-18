@@ -111,6 +111,7 @@ docker-compose down
 - Split test data for reuse and management.
 - Prefer API helpers for stable setup/cleanup.
 - Tests use `cy.intercept()` to assert API requests payload and response.
+- Covers data driven test by generating parameter combinations including border values. Random/Negative ones can be also added later.
 - Include web frontend performance measurement, and it could be combined with other performance/load tests.
 - **Authentication and authorization should also be tested, but not implemented due to licence restriction.**
 
