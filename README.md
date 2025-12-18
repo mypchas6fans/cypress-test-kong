@@ -13,11 +13,21 @@
 
 - `cypress/`
   - `e2e/` — Cypress specs (TypeScript `.ts` files)
-  - `support/` — shared support files and typed commands (`e2e.ts`, `command.ts`, `selectors.ts`)
+    - `Services/` — service-related tests (e.g., `testService.cy.ts`)
+    - `Routes/` — route-related tests (e.g., `testRoute.cy.ts`)
+    - `performance/` — frontend performance and web-vitals checks (e.g., `webVital.cy.ts`)
+  - `fixtures/` — test data and payload templates (`common.json`, `createService.json`, ...)
+  - `support/` — shared support files and typed helpers
+    - `e2e.ts` — global hooks and common intercepts
+    - `command.ts` — typed custom `Cypress.Commands` (API helpers)
+    - `selectors.ts` — centralized UI selectors
+    - `testData.ts` — typed constants wrapping fixtures and env overrides
 - `cypress.config.ts` — Cypress configuration (TypeScript)
 - `tsconfig.json` — TypeScript configuration for tests and support files
-- `.github/workflows/cypress.yml` — GitHub Actions workflow to run tests with docker-compose
-- `docker-compose.yaml` — local service stack used by CI and local runs (starts Kong stack)
+- `.github/workflows/cypress.yml` — GitHub Actions workflow to run tests with Docker
+- `docker-compose.yaml` — local service stack used by CI and local runs (starts Kong stack)  
+
+> Note: Tests are organized by functional area under `cypress/e2e/` to make it easy to run subsets (e.g., `npx cypress run --spec "cypress/e2e/Services/**"`).
 
 ---
 
@@ -73,12 +83,36 @@ docker-compose down
 
 ---
 
-## 🧪 Test design & important files
+## 🧪 Folder structure explained
 
-- `cypress/support/e2e.ts` — global hooks and common intercepts. Tests inherit this setup by default; tests can opt out if needed.
-- `cypress/support/selectors.ts` — centralized, data-testid-driven selectors to reduce fragility.
+- `cypress/e2e/` — organized by feature area (Services, Routes, etc). Run a subset by `--spec` or open individual specs in the runner.
+
+- `cypress/fixtures/` — canonical test data and request payload templates
+  - `common.json` — shared values (e.g., `serviceUrl`, `serviceTag`, `serviceDefaultReadTimeout`)
+  - `createService.json` — base payload used to create services in tests
+  - Use fixtures to keep payloads consistent and to make it easy to override values in tests.
+
+- `cypress/support/testData.ts` — typed layer exposing constants like `SERVICE_URL`, `SERVICE_TAG`, and `SERVICE_DEFAULT_READ_TIMEOUT` (these read from fixtures and allow `CYPRESS_*` env overrides).
+
+- `cypress/support/e2e.ts` — global hooks and common intercepts. Tests inherit this setup by default; tests can opt out by defining their own hooks.
+
+- `cypress/support/selectors.ts` — centralized, `data-testid` driven selectors to reduce fragility and duplication.
+
 - `cypress/support/command.ts` — typed `Cypress.Commands` for common API operations (e.g., `cy.apiCreateService`, `cy.apiDeleteService`, `cy.apiDeleteRoute`). Prefer API helpers for setup/cleanup where UI flows are flaky.
-- Tests use `cy.intercept()` to assert API requests (e.g., asserting the body of a create-route request).
+
+- `cypress/performance/` — contains frontend performance checks (e.g., `webVital.cy.ts`). These tests measure page load metrics (Page Load Time, FCP, LCP) via the `window.performance` API and assert thresholds. Metrics are captured in the page `onLoad` and read back by Cypress via `cy.window()` (no Cypress commands should be used inside page callbacks).
+
+---
+
+## 🧭 Design decisions (notes)
+
+- TypeScript for test files and support code: better safety and discoverability.
+- Centralized selectors (`selectors.ts`) to split test logic flow and presentation.
+- Split test data for reuse and management.
+- Prefer API helpers for stable setup/cleanup.
+- Tests use `cy.intercept()` to assert API requests payload and response.
+- Include web frontend performance measurement, and it could be combined with other performance/load tests.
+- **Authentication and authorization should also be tested, but not implemented due to licence restriction.**
 
 ---
 
@@ -86,12 +120,3 @@ docker-compose down
 
 - The workflow `cypress.yml` spins up the docker-compose stack, waits for the app to be ready, runs `npx tsc --noEmit` then `npx cypress run --headless`, uploads artifacts (screenshots & reports), and tears down the stack.
 - If you add new environment variables or change the compose services, update the workflow accordingly.
-
----
-
-## 🧭 Design decisions (notes)
-
-- TypeScript for test files and support code: better safety and discoverability for custom commands and intercept assertions.
-- Centralized selectors (`selectors.ts`) to avoid brittle tests that depend on presentation changes.
-- Prefer API helpers for setup/cleanup where the UI is flaky — this makes CI runs more stable and faster.
-
